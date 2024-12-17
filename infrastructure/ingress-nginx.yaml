@@ -2,13 +2,13 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: nginx-ingress-system
+  name: ingress-nginx-system
 ---
 apiVersion: source.toolkit.fluxcd.io/v1
 kind: HelmRepository
 metadata:
-  name: nginx-ingress
-  namespace: nginx-ingress-system
+  name: ingress-nginx
+  namespace: ingress-nginx-system
 spec:
   interval: 1h
   url: https://kubernetes.github.io/ingress-nginx
@@ -16,12 +16,12 @@ spec:
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: nginx-ingress
-  namespace: nginx-ingress-system
+  name: ingress-nginx
+  namespace: ingress-nginx-system
 spec:
   interval: 50m
-  releaseName: nginx-ingress
-  targetNamespace: nginx-ingress-system
+  releaseName: ingress-nginx
+  targetNamespace: ingress-nginx-system
   install:
     crds: Create
     remediation:
@@ -30,13 +30,13 @@ spec:
     crds: CreateReplace
   chart:
     spec:
-      chart: nginx-ingress
+      chart: ingress-nginx
       reconcileStrategy: ChartVersion
       version: 4.11.3
       sourceRef:
         kind: HelmRepository
-        name: nginx-ingress
-        namespace: nginx-ingress-system
+        name: ingress-nginx
+        namespace: ingress-nginx-system
   # Default values for nginx.
   # https://github.com/kubernetes/ingress-nginx/blob/main/charts/ingress-nginx/values.yaml
   values:
