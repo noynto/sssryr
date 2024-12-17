@@ -406,3 +406,18 @@ spec:
       enabled: false
       external: false
       namespace: ""
+---
+apiVersion: metallb.io/v1beta1
+kind: L2Advertisement
+metadata:
+  name: l2
+  namespace: metallb-system
+---
+apiVersion: metallb.io/v1beta1
+kind: IPAddressPool
+metadata:
+  name: pool
+  namespace: metallb-system
+spec:
+  addresses:
+    - 84.234.17.139/24
