@@ -420,4 +420,4 @@ metadata:
   namespace: metallb-system
 spec:
   addresses:
-    - 84.234.17.139/24
+    - 193.108.52.73/24
