@@ -408,16 +408,21 @@ spec:
       namespace: ""
 ---
 apiVersion: metallb.io/v1beta1
-kind: L2Advertisement
-metadata:
-  name: l2
-  namespace: metallb-system
----
-apiVersion: metallb.io/v1beta1
 kind: IPAddressPool
 metadata:
   name: pool
   namespace: metallb-system
 spec:
   addresses:
-    - 193.108.52.73/30
+    - 192.168.1.200-192.168.1.210
+---
+apiVersion: metallb.io/v1beta1
+kind: L2Advertisement
+metadata:
+  name: l2
+  namespace: metallb-system
+spec:
+  ipAddressPools:
+    - pool
+---
+
