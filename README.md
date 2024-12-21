@@ -1,6 +1,6 @@
-# Heimdall
+# SSSRYR (Painless Clusters Repository)
 
-Heimdall is an kubernetes cluster deployed to expose all my projects and tools that I used.
+SSSRYR is a clusters repository, where template and application manifests of my collection are stored.
 
 ## 🔩 Kubernetes Framework
 
