@@ -22,12 +22,6 @@ spec:
   interval: 50m
   releaseName: podinfo
   targetNamespace: podinfo-system
-  install:
-    crds: Create
-    remediation:
-      retries: 3
-  update:
-    crds: CreateReplace
   chart:
     spec:
       chart: podinfo
