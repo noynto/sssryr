@@ -30,7 +30,7 @@ spec:
         kind: HelmRepository
         name: node-exporter
         namespace: node-exporter-system
-      version: v1.7.2
+      version: 1.8.2
   values:
     # Default values for prometheus-node-exporter.
     # This is a YAML-formatted file.
