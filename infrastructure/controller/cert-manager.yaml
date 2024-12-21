@@ -22,10 +22,6 @@ spec:
   interval: 1h
   releaseName: cert-manager-controller
   targetNamespace: cert-manager-system
-  install:
-    crds: Create
-  update:
-    crds: CreateReplace
   chart:
     spec:
       chart: cert-manager
