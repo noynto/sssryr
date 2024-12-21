@@ -37,8 +37,7 @@ spec:
     replicaCount: 6
     ingress:
       enabled: true
-      annotations:
-        - "traefik.ingress.kubernetes.io/router.entrypoints: web"
+      annotations: ["traefik.ingress.kubernetes.io/router.entrypoints: web"]
       hosts:
         - host: noynto.me
           paths:
