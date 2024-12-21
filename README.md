@@ -1,4 +1,4 @@
-# SSSRYR (Painless Clusters Repository)
+# 📚 SSSRYR (Painless Clusters Repository)
 
 SSSRYR is a clusters repository, where template and application manifests of my collection are stored.
 
