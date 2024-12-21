@@ -41,3 +41,12 @@ spec:
   # https://github.com/stefanprodan/podinfo/blob/master/charts/podinfo/values.yaml
   values:
     replicaCount: 6
+    ingress:
+      enabled: true
+      annotations:
+        - traefik.ingress.kubernetes.io/router.entrypoints: web
+      hosts:
+        - host: noynto.me
+          paths:
+            - path: /podinfo
+              pathType: Prefix
