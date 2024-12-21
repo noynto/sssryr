@@ -4,4 +4,3 @@ resources:
   - sealed-secrets.yaml
   - longhorn.yaml
   - metallb.yaml
-  - ingress-nginx.yaml
