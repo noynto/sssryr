@@ -9,7 +9,13 @@ resources:
   - longhorn.yaml
   # Monitoring Zone
   - monitoring.yaml
+    # collect metrics of kubernetes
+  - kube-state-metrics.yaml
+    # collect metrics of nodes
   - node-exporter.yaml
+    # collect logs of pods
   - promtail.yaml
+    # webui to deal with all that data.
   - grafana.yaml
-  #- prometheus.yaml
+  - prometheuss.yaml
+  - lokii.yaml
