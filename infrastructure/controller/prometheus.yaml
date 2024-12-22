@@ -849,7 +849,7 @@ spec:
           - job_name: "node-exporter"
             kubernetes_sd_configs:
               - role: endpoints
-            related_configs:
+            relabel_configs:
               - source_labels: [__meta_kubernetes_endpoints_name]
                 regex: "node-exporter"
                 action: keep
