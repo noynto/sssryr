@@ -24,7 +24,7 @@ spec:
   targetNamespace: node-exporter-system
   chart:
     spec:
-      chart: node-exporter
+      chart: prometheus-node-exporter
       reconcileStrategy: ChartVersion
       sourceRef:
         kind: HelmRepository
