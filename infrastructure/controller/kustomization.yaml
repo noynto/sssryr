@@ -1,8 +1,15 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
+  # Used to sealed all secrets and store it in the repository.
   - sealed-secrets.yaml
+  # Used to collect certificate for TLS and manage reloading.
   - cert-manager.yaml
+  # CSI
   - longhorn.yaml
-  - prometheus.yaml
+  # Monitoring Zone
+  - monitoring.yaml
+  - node-exporter.yaml
+  - promtail.yaml
   - grafana.yaml
+  #- prometheus.yaml
