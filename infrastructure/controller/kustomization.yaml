@@ -5,3 +5,4 @@ resources:
   - cert-manager.yaml
   - longhorn.yaml
   - node-exporter.yaml
+  - prometheus.yaml
