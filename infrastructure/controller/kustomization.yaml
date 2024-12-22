@@ -5,3 +5,4 @@ resources:
   - cert-manager.yaml
   - longhorn.yaml
   - prometheus.yaml
+  - grafana.yaml
