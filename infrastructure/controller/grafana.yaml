@@ -319,7 +319,7 @@ spec:
       # ingressClassName: nginx
       # Values can be templated
       annotations:
-        traefik.ingress.kubernetes.io/router.entrypoints: web
+        traefik.ingress.kubernetes.io/router.entrypoints: websecure
         # kubernetes.io/ingress.class: nginx
         # kubernetes.io/tls-acme: "true"
       labels: {}
@@ -345,10 +345,10 @@ spec:
       #       port:
       #         name: use-annotation
 
-      tls: []
-      #  - secretName: chart-example-tls
-      #    hosts:
-      #      - chart-example.local
+      tls:
+        - secretName: grafana-tls
+          hosts:
+            - monitoring.noynto.me
 
     # -- BETA: Configure the gateway routes for the chart here.
     # More routes can be added by adding a dictionary key like the 'main' route.
