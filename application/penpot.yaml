@@ -1,0 +1,439 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: penpot-system
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: database
+  namespace: penpot-system
+data:
+  username: "penpot"
+  database: "penpot"
+---
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  name: database
+  namespace: penpot-system
+spec:
+  encryptedData:
+    password: AgAkhrS5E0QBJjP2ArdA6jhOyfjezAuJcoX/s2gB9Pm4iz/hf2ybTpi1qSnYRJBIPktsvB3gpRR0NtLEbGHl8xPd0unfOc7FxuOIXPL5/hMMlehV0ackUd5eMXbfIrK54hZESu4hHoFISAiU1QjXsuex2F7iFhIdsj7te89RVRMpCw/cQnTvEcLIyZFd5HK2YX/BQsVTuSn8FZ0tZZ07GiuthfSIpR+g5iIwVb5RRziylb4oYUFWCK/BgxaNuyhpUTpKAp6VnxmJA8oKzC2F73O3lE8Lwd+2FeeZ3r0P6i7iwkINEbYABrBmysboz9jjHsJCrtQ+QwNbtmheWabEY3D0/gEC5k9hfPy2eIwTQu36UuNCcdPO0iJ7nlJhz8kQOKCA13dd3dynAdCUfbP60fDyNCnk2tdE9TxDnSt1p88Eotfl0y/uR0Hi4CAxCHyCbKgTxR/wYC9wl6TAIPiIC21aADP7xyORw4wwZCs2mr/l2ps8+4LU7GpAc2hVg8L+ZqbCF9SHKFI5I/8sgHvzQ6Kq0UWIUyZp0t0IclVMBTqdnvdxVCjcGcgd8aMhUjEbNfe9M6IrR7eOKu4Ej8BntbCz8aDRgrH47MmYiME5yBIyVZKFR/ehFHISEuym9znwokB231Dd4wN3ysD05AX+GPY/kTWOvRwyL3i2aXTyYRUwapfj6ZIorUBS/m90/K9w6WYJ4MHywhXTK8BRvA3CF1a/NOgPt/jwxaklpaiQG0MOraJ+iiZNs7tk
+  template:
+    metadata:
+      name: database
+      namespace: penpot-system
+    type: Opaque
+---
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  name: server
+  namespace: penpot-system
+spec:
+  encryptedData:
+    key: AgA/kLoPtPLO2zJ2O+5NeqPY7VVun9Urg8tnQW6uaYP6VVza/aZTii3iVPM7JHjMjNvtkdL7/AzqvbLQXmPrLQ0ebU9w2WEL/f4pwLzksSSCjZiWh1C8CvaAkyuiVZJ0J2eZ8jwIlgIY3GG00mJQ/0avonNBRMdrZPRGq8juyz0r/9BiaTXgkdvIseM/fBhQ985A4GutIQcDQqDvPSuDUWou6lqjytJFlOL1kZ74qReiMNNlKZsUeM+6d6TMkDmEPDi+/ETNLLqSKwHa2pbc87l3FJRxk1UO+28vJaUCfhrs8DY3HrqaTYE+r4BdF/9saoJXPNr1xJl0jtqa8AbrpCk/vR0i34EIs5aLnjsRKtsayOVM5at/4KfEvQvRbVy2TNs/1SHZzofekTbwpHpGXVfSOyMiIrtB3lDnr6uLewumNnKbvBKPnGb/VJQNW7BUy+Cc2YW7fUTHIa0IcRuguRS2Y7L83c3u1ZpblbAncyfllaivmsiIHvuPK5TdVgOpFf8IvEECS1odZxkQFMswtj5eyllDGNjqm3ywvdkWmCnrlrSPOAZhG981KqfyUWXe9GcArvF24FnsbHszarIAWdQks6hn0JmfoF6z86Dwq4EwFOS+LhXKWC6/e2D6SipKqzMZ2LRHPVhHxTcKUw6U3t5dZ2I2i6dZM4m6b/hOgZDtpo4l+4B7lbfLBLZpYd9P2r5IdeusbVfUkk5a9QYPiV1TV51kVLdbliI5Mq0rklpUm9LvWmNuNwW0Tp+Mcq5x6aL9PqVJi1JM3nMGT8Mrb0hbHu8xonE/wmbofNVm1sQYp8wEFFi//Q==
+  template:
+    metadata:
+      name: server
+      namespace: penpot-system
+    type: Opaque
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: database
+  namespace: penpot-system
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 200Mi
+    limits:
+      storage: 400Mi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: cache
+  namespace: penpot-system
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 200Mi
+    limits:
+      storage: 400Mi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: server
+  namespace: penpot-system
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 200Mi
+    limits:
+      storage: 400Mi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: database
+  namespace: penpot-system
+  labels:
+    name: database
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: database
+  template:
+    metadata:
+      labels:
+        name: database
+    spec:
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: database
+      containers:
+        - name: postgres
+          image: docker.io/postgres:16.3-alpine
+          ports:
+            - containerPort: 5432
+              name: default
+              protocol: TCP
+          resources:
+            requests:
+              cpu: 50m
+              memory: 100Mi
+              ephemeral-storage: 100Mi
+            limits:
+              cpu: 100m
+              memory: 200Mi
+              ephemeral-storage: 200Mi
+          volumeMounts:
+            - mountPath: /var/lib/postgres/data
+              name: data
+          env:
+            - name: POSTGRES_INITDB_ARGS
+              value: "--data-checksums"
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: password
+                  name: database
+            - name: POSTGRES_USER
+              valueFrom:
+                configMapKeyRef:
+                  key: username
+                  name: database
+            - name: POSTGRES_DB
+              valueFrom:
+                configMapKeyRef:
+                  key: database
+                  name: database
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cache
+  namespace: penpot-system
+  labels:
+    name: cache
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: cache
+  template:
+    metadata:
+      labels:
+        name: cache
+    spec:
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: cache
+      containers:
+        - name: redis
+          image: docker.io/redis:7.4-alpine
+          ports:
+            - containerPort: 6379
+              name: default
+              protocol: TCP
+          resources:
+            requests:
+              cpu: 50m
+              memory: 100Mi
+              ephemeral-storage: 100Mi
+            limits:
+              cpu: 100m
+              memory: 200Mi
+              ephemeral-storage: 200Mi
+          volumeMounts:
+            - mountPath: /data
+              name: data
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: exporter
+  namespace: penpot-system
+  labels:
+    name: exporter
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: exporter
+  template:
+    metadata:
+      labels:
+        name: exporter
+    spec:
+      containers:
+        - name: penpot-exporter
+          image: docker.io/penpotapp/exporter:2.2.0
+          ports:
+            - containerPort: 6061
+              name: default
+              protocol: TCP
+          resources:
+            requests:
+              cpu: 600m
+              memory: 600Mi
+              ephemeral-storage: 100Mi
+            limits:
+              cpu: 800m
+              memory: 1000Mi
+              ephemeral-storage: 200Mi
+          env:
+            - name: PENPOT_PUBLIC_URI
+              value: "https://design.noynto.me"
+            - name: PENPOT_REDIS_URI
+              value: "redis://cache:6379/0"
+            - name: PENPOT_TELEMETRY_ENABLED
+              value: "true"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: server
+  namespace: penpot-system
+  labels:
+    name: server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: server
+  template:
+    metadata:
+      labels:
+        name: server
+    spec:
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: server
+      containers:
+        - name: penpot-backend
+          image: docker.io/penpotapp/backend:2.2.0
+          ports:
+            - containerPort: 6060
+              name: default
+              protocol: TCP
+          resources:
+            requests:
+              cpu: 300m
+              memory: 1000Mi
+              ephemeral-storage: 100Mi
+            limits:
+              cpu: 500m
+              memory: 1200Mi
+              ephemeral-storage: 200Mi
+          volumeMounts:
+            - mountPath: /opt/data/assets
+              name: data
+          env:
+            - name: PENPOT_FLAGS
+              value: "enable-registration enable-login-with-password disable-email-verification disable-smtp disable-prepl-server disable-cors enable-webhooks"
+            - name: PENPOT_PUBLIC_URI
+              value: "https://design.noynto.me"
+            - name: PENPOT_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  key: key
+                  name: server
+            - name: PENPOT_DATABASE_USERNAME
+              valueFrom:
+                configMapKeyRef:
+                  key: username
+                  name: database
+            - name: PENPOT_DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: password
+                  name: database
+            - name: PENPOT_DATABASE_URI
+              value: "postgresql://database:5432/nglots"
+            - name: PENPOT_ASSETS_STORAGE_BACKEND
+              value: "assets-fs"
+            - name: PENPOT_STORAGE_ASSETS_FS_DIRECTORY
+              value: "/opt/data/assets"
+            - name: PENPOT_REDIS_URI
+              value: "redis://cache:6379/0"
+            - name: PENPOT_TELEMETRY_ENABLED
+              value: "true"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: interface
+  namespace: penpot-system
+  labels:
+    name: interface
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: interface
+  template:
+    metadata:
+      labels:
+        name: interface
+    spec:
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: server
+      containers:
+        - name: penpot-interface
+          image: docker.io/penpotapp/frontend:2.2.0
+          ports:
+            - containerPort: 80
+              name: default
+              protocol: TCP
+          resources:
+            requests:
+              cpu: 50m
+              memory: 100Mi
+              ephemeral-storage: 100Mi
+            limits:
+              cpu: 100m
+              memory: 200Mi
+              ephemeral-storage: 200Mi
+          volumeMounts:
+            - mountPath: /opt/data/assets
+              name: data
+          env:
+            - name: PENPOT_FLAGS
+              value: "enable-registration enable-login-with-password"
+            - name: PENPOT_BACKEND_URI
+              value: "http://server:6060"
+            - name: PENPOT_EXPORTER_URI
+              value: "http://exporter:6061"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: database
+  namespace: penpot-system
+spec:
+  selector:
+    name: database
+  ports:
+    - name: default
+      port: 5432
+      protocol: TCP
+      targetPort: 5432
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cache
+  namespace: penpot-system
+spec:
+  selector:
+    name: cache
+  ports:
+    - name: default
+      port: 6379
+      protocol: TCP
+      targetPort: 6379
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: exporter
+  namespace: penpot-system
+spec:
+  selector:
+    name: exporter
+  ports:
+    - name: default
+      port: 6061
+      protocol: TCP
+      targetPort: 6061
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: server
+  namespace: penpot-system
+spec:
+  selector:
+    name: server
+  ports:
+    - name: default
+      port: 6060
+      protocol: TCP
+      targetPort: 6060
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: interface
+  namespace: penpot-system
+spec:
+  selector:
+    name: interface
+  ports:
+    - name: default
+      port: 80
+      protocol: TCP
+      targetPort: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: interface
+  namespace: penpot-system
+  annotations:
+    cert-manager.io/cluster-issuer: lets-encrypt
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+spec:
+  tls:
+    - hosts:
+        - design.noynto.me
+      secretName: interface-tls
+  rules:
+    - host: design.noynto.me
+      http:
+        paths:
+          - backend:
+              service:
+                name: interface
+                port:
+                  number: 80
+            pathType: Prefix
+            path: /

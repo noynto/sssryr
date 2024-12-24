@@ -18,4 +18,4 @@ resources:
     # webui to deal with all that data.
   - grafana.yaml
   - prometheuss.yaml
-  - lokii.yaml
+  #- lokii.yaml
