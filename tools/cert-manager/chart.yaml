@@ -10,5 +10,4 @@ spec:
   sourceRef:
     kind: HelmRepository
     name: cert-manager
-    namespace: cert-manager-system
   version: v1.16.2
