@@ -1,0 +1,13 @@
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmChart
+metadata:
+  name: sealed-secrets
+  namespace: sealed-secrets-system
+spec:
+  interval: 5m
+  chart: sealed-secrets
+  reconcileStrategy: ChartVersion
+  sourceRef:
+    kind: HelmRepository
+    name: sealed-secrets
+  version: 2.17.0
